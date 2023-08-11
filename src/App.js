@@ -24,14 +24,18 @@ import Contact from "./pages/contact/Contact";
 axios.defaults.withCredentials = true;
 
 function App() {
-  const dispatch = useDispatch();
-
+  const dispatch = useDispatch(); 
   useEffect(() => {
-    async function loginStatus() {
-      const status = await getLoginStatus();
-      dispatch(SET_LOGIN(status));
+    async function checkLoginStatus() {
+      try {
+        const response = await axios.get("/api/users/loggedin"); // Adjust the endpoint URL
+        const isLoggedIn = response.data;
+        dispatch(SET_LOGIN(isLoggedIn));
+      } catch (error) {
+        console.error("Error checking login status:", error);
+      }
     }
-    loginStatus();
+    checkLoginStatus();
   }, [dispatch]);
 
   return (
