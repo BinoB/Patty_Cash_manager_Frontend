@@ -33,10 +33,20 @@ const authSlice = createSlice({
       state.user.bio = profile.bio;
       state.user.photo = profile.photo;
     },
+    SESSION_EXPIRED(state) {
+      state.isLoggedIn = false;
+      state.user = {
+        name: "",
+        email: "",
+        phone: "",
+        bio: "",
+        photo: "",
+      };
+    },
   },
 });
 
-export const { SET_LOGIN, SET_NAME, SET_USER } = authSlice.actions;
+export const { SET_LOGIN, SET_NAME, SET_USER,SESSION_EXPIRED } = authSlice.actions;
 
 export const selectIsLoggedIn = (state) => state.auth.isLoggedIn;
 export const selectName = (state) => state.auth.name;
